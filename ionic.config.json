@@ -1,5 +1,7 @@
 {
   "name": "cajun-communication",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
