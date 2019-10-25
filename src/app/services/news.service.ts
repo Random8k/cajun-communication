@@ -11,6 +11,7 @@ export class NewsService {
 
   constructor( public http: HttpClient ) { }
 
+  //TODO: Re-do so app doesn't refesh automatically
   fetchNews() {
     console.log('fetching news');
     let url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=3830a18d17bb499f94ea98e04fc7a512"

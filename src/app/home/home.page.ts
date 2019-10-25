@@ -20,7 +20,6 @@ export class HomePage {
     this.newsService.fetchNews().subscribe();
   }
 
-  
   openNative(x: string){
     console.log('opening...');
     this.iab.create(x, `_system`);

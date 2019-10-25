@@ -1,14 +1,17 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+      </ion-buttons>
     <ion-title>
       Main
     </ion-title>
+    <ion-button>
+        Right Icon
+        <ion-icon slot="end" name="search"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
-
 
   <ion-content>
     <ion-card button = 'true' (click)=openNative(item.url) class="welcome-card" *ngFor="let item of newsService.newsReports">
