@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
