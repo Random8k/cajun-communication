@@ -1,14 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+      </ion-buttons>
     <ion-title>
       Main
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="presentPopover($event)"> 
+        <ion-icon name="search"></ion-icon> 
+      </ion-button>
+  </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 
   <ion-content>
     <ion-card button = 'true' (click)=openNative(item.url) class="welcome-card" *ngFor="let item of newsService.newsReports">
@@ -19,10 +23,6 @@
       </ion-card-header>
       <ion-card-content>
         <p>{{ item.description }}</p>
-        <ion-button>Details</ion-button>     
-        <ion-button>
-            <ion-icon name="star-outline"></ion-icon>
-        </ion-button>
       </ion-card-content>
     </ion-card>
 
