@@ -4,7 +4,7 @@
           <ion-menu-button></ion-menu-button>
       </ion-buttons>
     <ion-title>
-      Main
+      News
     </ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="presentPopover($event)"> 
@@ -13,6 +13,20 @@
   </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+<ion-toolbar>
+  <ion-segment scrollable>
+    <ion-buttons>
+      <ion-button (click)=getNewsWithButton(setValue(3))>Breaking</ion-button>
+      <ion-button (click)=getNewsWithButton(setValue(0))>Buisness</ion-button>
+      <ion-button (click)=getNewsWithButton(setValue(1))>Entertainment</ion-button>
+      <ion-button (click)=getNewsWithButton(setValue(2))>Health</ion-button>
+      <ion-button (click)=getNewsWithButton(setValue(4))>Politics</ion-button>
+      <ion-button (click)=getNewsWithButton(setValue(5))>Sports</ion-button>
+      <ion-button (click)=getNewsWithButton(setValue(6))>Tech</ion-button>
+    </ion-buttons>
+  </ion-segment>
+</ion-toolbar>
 
   <ion-content>
     <ion-card button = 'true' (click)=openNative(item.url) class="welcome-card" *ngFor="let item of newsService.newsReports">
