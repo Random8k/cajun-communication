@@ -14,6 +14,9 @@ export class HomePage {
 
   constructor( private newsService: NewsService, private iab: InAppBrowser, private popoverController: PopoverController) {}
 
+  private topics = ["business", "entertainment","health", "general", "politics", "sports", "technology"];
+  searchValue: number = 0;
+
   ngOnInit() {
     // this.newsService.fetchNews().subscribe();
   }
@@ -35,4 +38,16 @@ export class HomePage {
     });
     return await popover.present();
   }
+
+  setValue(x) {
+    this.searchValue = x;
+    console.log(this.searchValue);
+    console.log(this.topics[this.searchValue]);
+}
+
+
+
+ getNewsWithButton(){
+   this.newsService.fetchNewsDetailed(this.topics[this.searchValue]).subscribe();
+}
 }
