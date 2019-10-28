@@ -27,7 +27,7 @@ export class NewsService {
     }));
   }
 
-  fetchNewsDetailed(topic) {
+  fetchNewsByTopic(topic) {
     console.log('fetching news');
     let url = "https://newsapi.org/v2/top-headlines?category="+ topic +"&country=us&apiKey=3830a18d17bb499f94ea98e04fc7a512"
     return this.http.get(url).pipe(tap(response => {
