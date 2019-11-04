@@ -45,9 +45,7 @@ export class HomePage {
     console.log(this.topics[this.searchValue]);
 }
 
-
-
  getNewsWithButton(){
-   this.newsService.fetchNewsDetailed(this.topics[this.searchValue]).subscribe();
+   this.newsService.fetchNewsByTopic(this.topics[this.searchValue]).subscribe();
 }
 }
