@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NewsService } from '../services/news.service';
 import { ToastController } from '@ionic/angular';
+//import * as data from '';
+import * as data from '../data/site.data.json';
 
 @Component({
   selector: 'app-options',
@@ -8,9 +10,10 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./options.page.scss'],
 })
 export class OptionsPage implements OnInit {
+  name: any;
 
   constructor( private newsService: NewsService, private toastCtrl: ToastController) { }
-  public sourceList = [];
+  public sourceList = []
 
   customSources: boolean = false;
 
@@ -18,7 +21,7 @@ export class OptionsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.newsService.fetchProviders().subscribe();
+    //this.newsService.fetchProviders().subscribe();
   }
 
   selectCustomSources(){
@@ -55,5 +58,10 @@ export class OptionsPage implements OnInit {
 
   toStringCommand(){
     console.log(this.sourceList.toString())
+  }
+
+  test(){
+    console.log (data[0].id)
+    console.log(data[0])
   }
 }

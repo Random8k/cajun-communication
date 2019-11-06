@@ -2,16 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class NewsService {
   public newsReports = [];
   public providers = [];
  
   constructor( public http: HttpClient ) { }
 
+  apiKey: string = environment.apiKey;
   
 
   /*
@@ -22,7 +25,7 @@ export class NewsService {
   */
   fetchNews() {
     console.log('fetching news');
-    let url = "https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey="
+    let url = "https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey="+ this.apiKey +""
     return this.http.get(url).pipe(tap(response => {
         console.log(response);
         this.newsReports = response['articles'];
@@ -31,7 +34,7 @@ export class NewsService {
 
   fetchNewsByTopic(topic) {
     console.log('fetching news');
-    let url = "https://newsapi.org/v2/top-headlines?category="+ topic +"&country=us&apiKey=key"
+    let url = "https://newsapi.org/v2/top-headlines?category="+ topic +"&country=us&apiKey="+ this.apiKey +""
     return this.http.get(url).pipe(tap(response => {
         console.log(response);
         this.newsReports = response['articles'];
@@ -47,7 +50,7 @@ export class NewsService {
 
   fetchCustomNews(searchTerm){
     console.log('fetching customized news!');
-    let url = "https://newsapi.org/v2/everything?q="+ searchTerm +"&apiKey=key"
+    let url = "https://newsapi.org/v2/everything?q="+ searchTerm +"&apiKey="+ this.apiKey +""
     return this.http.get(url).pipe(tap(response => {
         console.log(response);
         this.newsReports = response['articles'];
@@ -57,7 +60,7 @@ export class NewsService {
 
   fetchCustomNewsWithSources(searchTerm, list){
     console.log('fetching customized news!');
-    let url = "https://newsapi.org/v2/everything?q="+ searchTerm +"&apiKey=key&sources="+ list +""
+    let url = "https://newsapi.org/v2/everything?q="+ searchTerm +"&apiKey="+ this.apiKey +"&sources="+ list +""
     return this.http.get(url).pipe(tap(response => {
         console.log(response);
         this.newsReports = response['articles'];
@@ -67,11 +70,10 @@ export class NewsService {
 
   fetchProviders(){
     console.log('fetching providers!');
-    let url = "https://newsapi.org/v2/sources?language=en&country=us&apiKey=key"
+    let url = "https://newsapi.org/v2/sources?language=en&country=us&apiKey="+ this.apiKey +""
     return this.http.get(url).pipe(tap(response => {
         console.log(response);
         this.providers = response['sources'];
     }));
-      
   }
 }

@@ -36,14 +36,14 @@ customDetailedSearch(){
     this.customSearch()
    }
 
- if (this.customSources == true){
+ else if (this.customSources == true){
     console.log(this.customSources)
     console.log("This statement is true")
     this.customDetailedSearch()
    }
 
-   else{
-    console.log("Something broke somewhere")
+  else{
+    console.log("not right")
    }
  }
 }
