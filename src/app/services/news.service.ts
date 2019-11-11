@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { environment } from 'src/environments/environment'
+import { environment } from 'src/environments/enviroment'
 
 @Injectable({
   providedIn: 'root'
@@ -59,7 +59,7 @@ export class NewsService {
   }
 
   fetchCustomNewsWithSources(searchTerm, list){
-    console.log('fetching customized news!');
+    console.log('fetching detailed news!');
     let url = "https://newsapi.org/v2/everything?q="+ searchTerm +"&apiKey="+ this.apiKey +"&sources="+ list +""
     return this.http.get(url).pipe(tap(response => {
         console.log(response);

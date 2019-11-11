@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, NavController } from '@ionic/angular';
 import { NewsService } from 'src/app/services/news.service'
+import { TransferService } from '../services/transfer.service'
 
 @Component({
   selector: 'app-popover',
@@ -9,12 +10,16 @@ import { NewsService } from 'src/app/services/news.service'
 })
 export class PopoverComponent implements OnInit {
 
-  constructor(public popoverController: PopoverController, public navCtrl: NavController, public newsService: NewsService) { }
+  constructor(public popoverController: PopoverController, public navCtrl: NavController, public newsService: NewsService, public transferService:TransferService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getCustomActivation()
+    this.getCustomSites()
+  }
 
-  inputValue: string = "";
-  customSources: boolean = false;
+  inputValue: string = ""
+  sitesToUse: string = ""
+  useCustomSource: boolean = null
   
   getInput() {
     this.inputValue
@@ -26,24 +31,36 @@ customSearch(){
 }
 
 customDetailedSearch(){
-  // this.newsService.fetchCustomNewsWithSources(this.inputValue).subscribe();
+  this.newsService.fetchCustomNewsWithSources(this.inputValue, this.sitesToUse).subscribe();
 }
 
- selectSearch(){
-   if (this.customSources == false){
-    console.log(this.customSources)
-    console.log("This statement is false")
-    this.customSearch()
-   }
-
- else if (this.customSources == true){
-    console.log(this.customSources)
-    console.log("This statement is true")
-    this.customDetailedSearch()
-   }
-
-  else{
-    console.log("not right")
-   }
- }
+getCustomSites(){
+  return this.transferService.get('sourceList').then((val) => {
+    console.log(val);
+    this.sitesToUse = val;
+  });
 }
+
+getCustomActivation(){
+  return this.transferService.get('activation').then((val) => {
+    console.log(val);
+    this.useCustomSource = val;
+  });
+}
+
+pickSearch(){
+  if (this.useCustomSource = true) {
+       this.customDetailedSearch()
+      } 
+
+  else if (this.useCustomSource = false) {
+        this.customDetailedSearch()
+       } 
+    };
+
+  }
+
+  
+
+
+ 
