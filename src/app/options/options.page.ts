@@ -80,6 +80,8 @@ export class OptionsPage implements OnInit {
     this.transferService.get('sourceList')
   }
 
+  //TODO: Get source selection buttons to stay checked between page switches
+  //? Determine use of isChecked variable in sites []
 
   sites = [
     {
