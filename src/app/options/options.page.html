@@ -18,9 +18,10 @@
     </ion-grid>
 
     <div *ngIf="customSources">      
-      <ion-button (click)="saveToString(setCustomSites(sourceList))">Confirm
+      <ion-button (click)="saveToString(setCustomSites(sourceList))"
+      (click)="saveToString(setCustomNames(nameList))">Confirm
       Changes</ion-button>
-      <ion-button (click)="getCustomSites(searchList)">See Site List</ion-button>
+      <ion-button (click)="getSiteNames()" (click)="presentSiteList()" >See Site List</ion-button>
 
     <ion-list *ngFor="let site of sites">
       <ion-item>
@@ -29,7 +30,7 @@
           <h3 style="text-transform: capitalize;">{{  site.category  }}</h3>
           <p>{{  site.description  }}</p>
         </ion-label>
-        <ion-checkbox slot="end" (ionChange)=putIntoArray(site.id)></ion-checkbox>
+        <ion-checkbox slot="end" (ionChange)=putIntoSourceArray(site.id) (ionChange)=putIntoNameArray(site.name)></ion-checkbox>
       </ion-item>
     </ion-list>
   </div>

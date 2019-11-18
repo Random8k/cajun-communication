@@ -13,13 +13,16 @@ export class OptionsPage implements OnInit {
 
   constructor( private newsService: NewsService, private toastCtrl: ToastController, public transferService:TransferService ){ }
   public sourceList = []
+  public nameList = []
 
   customSources: boolean = false;
-  isChecked: boolean = false;
   sourceListAsArray: string = '';
+  nameListAsArray: string = '';
+  siteNamesStored: string = '';
 
   ngOnInit() {
     this.getCustomActivation()
+    this.getSiteNames()
   }
 
   ionViewWillEnter() {
@@ -33,12 +36,20 @@ export class OptionsPage implements OnInit {
     });
   }
 
+  
+  getSiteNames(){
+    return this.transferService.get('nameList').then((val) => {
+      console.log(val);
+      this.siteNamesStored = val;
+    });
+  }
+
   selectCustomSources(){
     console.log(this.customSources)
     this.transferService.set('activation', this.customSources)
   }
 
-  putIntoArray(item){
+  putIntoSourceArray(item){
 
     if (this.sourceList.length <= 19 && this.sourceList.indexOf(item) == -1){
       this.sourceList.push(item)
@@ -57,9 +68,34 @@ export class OptionsPage implements OnInit {
     }
   }
 
+  putIntoNameArray(item){
+
+    if (this.nameList.length <= 19 && this.nameList.indexOf(item) == -1){
+      this.nameList.push(item)
+      console.log(item)
+      console.log(this.nameList.length)
+      console.log(this.nameList)
+    }
+
+    else if(this.nameList.indexOf(item) != -1){
+      this.nameList.splice(this.nameList.indexOf(item), 1)
+      console.log(this.nameList)
+    }
+
+  }
+
   async presentToast() {
     const toast = await this.toastCtrl.create({
       message: "You can only select a maximum of 20 sources.",
+      duration: 5000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  async presentSiteList() {
+    const toast = await this.toastCtrl.create({
+      message: ""+this.siteNamesStored,
       duration: 5000,
       position: 'top'
     });
@@ -72,13 +108,24 @@ export class OptionsPage implements OnInit {
     console.log(this.sourceListAsArray)
   }
 
+  saveNamesToString(toSave){
+    toSave = this.nameList.toString();
+    this.nameListAsArray = toSave;
+    console.log(this.nameListAsArray)
+  }
+
   setCustomSites(selection) {
     this.transferService.set('sourceList', selection)
+  }
+
+  setCustomNames(selection) {
+    this.transferService.set('nameList', selection)
   }
 
   getCustomSites(){
     this.transferService.get('sourceList')
   }
+  
 
   //TODO: Get source selection buttons to stay checked between page switches
   //? Determine use of isChecked variable in sites []
@@ -92,8 +139,7 @@ export class OptionsPage implements OnInit {
       url: "https://abcnews.go.com",
       category: "general",
       language: "en",
-      country: "us",
-      isChecked: "false"
+      country: "us"
     },
     {
       id: "al-jazeera-english",
@@ -125,8 +171,7 @@ export class OptionsPage implements OnInit {
       url: "https://apnews.com/",
       category: "general",
       language: "en",
-      country: "us",
-      isChecked: "false"
+      country: "us"
     },
     {
       id: "axios",
@@ -136,8 +181,7 @@ export class OptionsPage implements OnInit {
       url: "https://www.axios.com",
       category: "general",
       language: "en",
-      country: "us",
-      isChecked: "false"
+      country: "us"
     },
     {
       id: "bleacher-report",
@@ -148,7 +192,6 @@ export class OptionsPage implements OnInit {
       category: "sports",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "bloomberg",
@@ -159,7 +202,6 @@ export class OptionsPage implements OnInit {
       category: "business",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "breitbart-news",
@@ -170,7 +212,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "business-insider",
@@ -180,8 +221,7 @@ export class OptionsPage implements OnInit {
       url: "http://www.businessinsider.com",
       category: "business",
       language: "en",
-      country: "us",
-      isChecked: "false"
+      country: "us"
     },
     {
       id: "buzzfeed",
@@ -192,7 +232,6 @@ export class OptionsPage implements OnInit {
       category: "entertainment",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "cbs-news",
@@ -203,7 +242,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "cnbc",
@@ -214,7 +252,6 @@ export class OptionsPage implements OnInit {
       category: "business",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "cnn",
@@ -225,7 +262,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "crypto-coins-news",
@@ -236,7 +272,6 @@ export class OptionsPage implements OnInit {
       category: "technology",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "engadget",
@@ -247,7 +282,6 @@ export class OptionsPage implements OnInit {
       category: "technology",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "entertainment-weekly",
@@ -258,7 +292,6 @@ export class OptionsPage implements OnInit {
       category: "entertainment",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "espn",
@@ -269,7 +302,6 @@ export class OptionsPage implements OnInit {
       category: "sports",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "espn-cric-info",
@@ -280,7 +312,6 @@ export class OptionsPage implements OnInit {
       category: "sports",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "fortune",
@@ -290,7 +321,6 @@ export class OptionsPage implements OnInit {
       category: "business",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "fox-news",
@@ -301,7 +331,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "fox-sports",
@@ -312,7 +341,6 @@ export class OptionsPage implements OnInit {
       category: "sports",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "google-news",
@@ -323,7 +351,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "hacker-news",
@@ -334,7 +361,6 @@ export class OptionsPage implements OnInit {
       category: "technology",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "ign",
@@ -345,7 +371,6 @@ export class OptionsPage implements OnInit {
       category: "entertainment",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "mashable",
@@ -356,7 +381,6 @@ export class OptionsPage implements OnInit {
       category: "entertainment",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "medical-news-today",
@@ -367,7 +391,6 @@ export class OptionsPage implements OnInit {
       category: "health",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "msnbc",
@@ -378,7 +401,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "mtv-news",
@@ -389,7 +411,6 @@ export class OptionsPage implements OnInit {
       category: "entertainment",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "national-geographic",
@@ -400,7 +421,6 @@ export class OptionsPage implements OnInit {
       category: "science",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "national-review",
@@ -411,7 +431,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "nbc-news",
@@ -422,7 +441,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "new-scientist",
@@ -433,7 +451,6 @@ export class OptionsPage implements OnInit {
       category: "science",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "newsweek",
@@ -444,7 +461,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "new-york-magazine",
@@ -455,7 +471,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "next-big-future",
@@ -466,7 +481,6 @@ export class OptionsPage implements OnInit {
       category: "science",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "nfl-news",
@@ -477,7 +491,6 @@ export class OptionsPage implements OnInit {
       category: "sports",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "nhl-news",
@@ -488,7 +501,6 @@ export class OptionsPage implements OnInit {
       category: "sports",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "politico",
@@ -499,7 +511,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "polygon",
@@ -510,7 +521,6 @@ export class OptionsPage implements OnInit {
       category: "entertainment",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "recode",
@@ -521,7 +531,6 @@ export class OptionsPage implements OnInit {
       category: "technology",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "reddit-r-all",
@@ -532,7 +541,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "reuters",
@@ -543,7 +551,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "techcrunch",
@@ -554,7 +561,6 @@ export class OptionsPage implements OnInit {
       category: "technology",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "techradar",
@@ -565,7 +571,6 @@ export class OptionsPage implements OnInit {
       category: "technology",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "the-american-conservative",
@@ -576,7 +581,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "the-hill",
@@ -587,7 +591,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "the-huffington-post",
@@ -598,7 +601,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "the-new-york-times",
@@ -609,7 +611,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "the-next-web",
@@ -620,7 +621,6 @@ export class OptionsPage implements OnInit {
       category: "technology",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "the-verge",
@@ -631,7 +631,6 @@ export class OptionsPage implements OnInit {
       category: "technology",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "the-wall-street-journal",
@@ -642,7 +641,6 @@ export class OptionsPage implements OnInit {
       category: "business",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "the-washington-post",
@@ -653,7 +651,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "the-washington-times",
@@ -664,7 +661,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "time",
@@ -675,7 +671,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "usa-today",
@@ -686,7 +681,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "vice-news",
@@ -697,7 +691,6 @@ export class OptionsPage implements OnInit {
       category: "general",
       language: "en",
       country: "us",
-      isChecked: "false"
     },
     {
       id: "wired",
@@ -708,7 +701,6 @@ export class OptionsPage implements OnInit {
       category: "technology",
       language: "en",
       country: "us",
-      isChecked: "false"
     }
   ];
 
