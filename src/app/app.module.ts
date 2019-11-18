@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 // importing browser capability
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { IonicStorageModule } from '@ionic/storage'
 
 
 
@@ -19,7 +20,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   declarations: [AppComponent],
   entryComponents: [],
   // JDavis: add HttpClientModule to imports
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],  
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, IonicStorageModule.forRoot()],  
   providers: [
     StatusBar,
     SplashScreen,
